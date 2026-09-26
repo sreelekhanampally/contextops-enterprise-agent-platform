@@ -1,3 +1,5 @@
+import asyncio
+import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -13,6 +15,7 @@ from app.dependencies import get_retrieval_service
 from app.routers import actions, chat, documents, health
 
 settings = get_settings()
+logger = logging.getLogger(__name__)
 
 
 async def seed_documents_if_needed() -> None:
@@ -25,16 +28,38 @@ async def seed_documents_if_needed() -> None:
         retrieval = get_retrieval_service()
         seed_dir = Path(__file__).resolve().parents[1] / "seed_documents"
         for path in sorted(seed_dir.glob("*.md")):
-            await retrieval.ingest_text(session, path.name, "text/markdown", path.read_text(encoding="utf-8"))
+            await retrieval.ingest_text(
+                session,
+                path.name,
+                "text/markdown",
+                path.read_text(encoding="utf-8"),
+            )
+
+
+async def seed_documents_background() -> None:
+    try:
+        await seed_documents_if_needed()
+        logger.info("Seed document ingestion completed")
+    except Exception:
+        logger.exception("Seed document ingestion failed")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await init_database()
+
+    seed_task: asyncio.Task | None = None
     if settings.auto_seed:
         await seed_structured_data()
-        await seed_documents_if_needed()
+        # Loading Sentence Transformers can take a while on a cold cloud instance.
+        # Run document embedding in the background so Render can mark the web
+        # service healthy instead of timing out during application startup.
+        seed_task = asyncio.create_task(seed_documents_background())
+
     yield
+
+    if seed_task and not seed_task.done():
+        seed_task.cancel()
 
 
 app = FastAPI(
