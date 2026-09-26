@@ -1,0 +1,18 @@
+{
+  "routing": [
+    {"question": "How many annual leave days do employees receive?", "expected": "retrieval"},
+    {"question": "What does the incident response runbook say about severity one incidents?", "expected": "retrieval"},
+    {"question": "Which department has the highest number of open tickets?", "expected": "sql"},
+    {"question": "How many SLA-breached tickets does each department have?", "expected": "sql"},
+    {"question": "Compare our incident policy with current unresolved incidents", "expected": "hybrid"},
+    {"question": "What does policy require and which team currently has the most SLA risk?", "expected": "hybrid"},
+    {"question": "Create a high-priority incident for a database outage", "expected": "action"},
+    {"question": "Raise a critical security incident for an exposed credential", "expected": "action"}
+  ],
+  "retrieval": [
+    {"question": "How many annual leave days do employees receive?", "expected_source": "hr_policy.md"},
+    {"question": "What should I do after discovering a production security incident?", "expected_source": "incident_response.md"},
+    {"question": "Who owns production services?", "expected_source": "engineering_handbook.md"},
+    {"question": "What are the support escalation expectations?", "expected_source": "faq.md"}
+  ]
+}

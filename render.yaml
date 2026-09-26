@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: contextops-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_NAME
+        value: ContextOps
+      - key: DEBUG
+        value: "false"
+      - key: DATABASE_URL
+        sync: false
+      - key: AUTO_SEED
+        value: "true"
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.6-flash
+      - key: GEMINI_FALLBACK_ENABLED
+        value: "false"
+      - key: OLLAMA_ENABLED
+        value: "false"
+      - key: OLLAMA_FALLBACK_ENABLED
+        value: "false"
+      - key: EMBEDDING_MODEL
+        value: sentence-transformers/all-MiniLM-L6-v2
+      - key: EMBEDDING_DIM
+        value: "384"
+      - key: TOP_K
+        value: "5"
+      - key: MIN_SIMILARITY
+        value: "0.20"
+      - key: EMBEDDING_BATCH_SIZE
+        value: "64"
+      - key: CHUNK_SIZE
+        value: "800"
+      - key: CHUNK_OVERLAP
+        value: "120"
+      - key: MAX_UPLOAD_MB
+        value: "10"
+      - key: MAX_SQL_ROWS
+        value: "100"
+      - key: CORS_ORIGINS
+        sync: false
