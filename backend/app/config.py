@@ -34,8 +34,12 @@ class Settings(BaseSettings):
     ollama_timeout_seconds: float = 90.0
     ollama_keep_alive: str = "10m"
 
+    # local keeps the original MiniLM architecture for development.
+    # gemini is a memory-light cloud option for small hosted instances.
+    embedding_provider: Literal["local", "gemini"] = "local"
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     embedding_dim: int = 384
+    embedding_timeout_seconds: float = 60.0
     top_k: int = 5
     min_similarity: float = 0.20
     embedding_batch_size: int = 64
