@@ -212,3 +212,21 @@ A concise version:
 > ContextOps is a multi-agent enterprise copilot orchestrated with LangGraph. A deterministic supervisor classifies each request and routes it to document retrieval, structured SQL analytics, hybrid reasoning, or an approval-gated action flow. Documents are chunked and embedded locally with all-MiniLM-L6-v2, stored in pgvector, and retrieved with cosine similarity. The final answer is grounded in retrieved evidence or SQL results, passed through a validation node, and returned with citations and an execution trace. Write actions are never executed autonomously; they require explicit human approval.
 
 See `docs/INTERVIEW_GUIDE.md` for a deeper walkthrough.
+
+---
+# 📜 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## Author
+
+**Sreelekha Nampally**
+
+Full-Stack Developer and aspiring AI/ML Engineer.
+
+* GitHub: [@sreelekhanampally](https://github.com/sreelekhanampally)
+* LinkedIn: [sreelekha-nampally](https://www.linkedin.com/in/sreelekha-nampally)
+* Email: sreelekhanampally27@gmail.com
+
